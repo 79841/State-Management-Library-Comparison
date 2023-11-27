@@ -1,5 +1,3 @@
-function ContextTester() {
+export function ContextTester() {
   return <div>Enter</div>;
 }
-
-export default ContextTester;
