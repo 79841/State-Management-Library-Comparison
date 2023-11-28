@@ -2,18 +2,14 @@
 import { TItem } from "@/types/Item";
 import { createContext, useContext } from "react";
 
-type TSelectedItemContext = {
-  selectedItem: TItem | null;
-};
+export type TSelectedItemContext = TItem | null;
 
-type TSelectedItemDispatchContext = {
+export type TSelectedItemDispatchContext = {
   selectItem: (item: TItem) => void;
-  unselectItem: (item: TItem) => void;
+  unselectItem: () => void;
 };
 
-export const SelectedItemContext = createContext<TSelectedItemContext>({
-  selectedItem: null,
-});
+export const SelectedItemContext = createContext<TSelectedItemContext>(null);
 
 export const SelectedItemDispatchContext =
   createContext<TSelectedItemDispatchContext>({
