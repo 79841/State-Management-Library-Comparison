@@ -6,7 +6,7 @@ import {
 } from "@/context/SelectedItemContext";
 import { items } from "@/data/item";
 import { TItem } from "@/types/Item";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, memo, useState } from "react";
 
 type TContextTesterItemProps = {
   item: TItem;
@@ -29,6 +29,7 @@ function ContextTesterItem({ item }: TContextTesterItemProps) {
     <div>
       <input type="checkbox" checked={isChecked} onChange={handleCheck} />
       <span>{item.name}</span>
+      <TestComponent2 />
     </div>
   );
 }
@@ -36,7 +37,8 @@ function ContextTesterItem({ item }: TContextTesterItemProps) {
 export function ContextTester() {
   return (
     <SelectedItemContextProvider>
-      <div>
+      <div className="p-4">
+        <TestComponent1 />
         {items.map((item: TItem) => (
           <ContextTesterItem key={item.name} item={item} />
         ))}
@@ -44,3 +46,11 @@ export function ContextTester() {
     </SelectedItemContextProvider>
   );
 }
+
+function TestComponent1() {
+  return <div className="m-4">test component 1</div>;
+}
+
+const TestComponent2 = memo(function TestComponent2() {
+  return <div className="m-4">test component 2</div>;
+});
