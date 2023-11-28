@@ -4,7 +4,7 @@ import { ReduxTester } from "./_components/ReduxTester";
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex">
       <ContextTester />
       <ReduxTester />
       <RecolilTester />
