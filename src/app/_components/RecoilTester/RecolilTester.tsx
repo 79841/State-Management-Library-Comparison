@@ -3,34 +3,40 @@ import { items } from "@/data/item";
 import { TItem } from "@/types/Item";
 import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedItemAtom } from "@/lib/recoil/selectedItem";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, memo, useCallback } from "react";
+import { TestComponent1, TestComponent2 } from "@/components/testComponent";
+import { Item } from "@/components/item";
 
 type TRecoillTesterItemProps = {
   item: TItem;
 };
 
-function RecoilTesterItem({ item }: TRecoillTesterItemProps) {
+const RecoilTesterItem = memo(function RecoilTesterItem({
+  item,
+}: TRecoillTesterItemProps) {
   const selectedItem = useRecoilValue(selectedItemAtom);
   const setSelectedItemState = useSetRecoilState(selectedItemAtom);
 
-  const handleCheck: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.target.checked) {
-      setSelectedItemState((_) => item);
-    } else {
-      setSelectedItemState((_) => null);
-    }
-  };
+  const handleCheck: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      if (e.target.checked) {
+        setSelectedItemState((_) => item);
+      } else {
+        setSelectedItemState((_) => null);
+      }
+    },
+    [item, setSelectedItemState]
+  );
 
   const isChecked = selectedItem?.name == item.name;
 
   return (
     <div>
-      <input type="checkbox" onChange={handleCheck} checked={isChecked} />
-      <span>{item.name}</span>
+      <Item item={item} isChecked={isChecked} handleCheck={handleCheck} />
       <TestComponent2 />
     </div>
   );
-}
+});
 
 export function RecolilTester() {
   return (
@@ -43,12 +49,4 @@ export function RecolilTester() {
       </div>
     </RecoilRoot>
   );
-}
-
-function TestComponent1() {
-  return <div className="m-4">test component 1</div>;
-}
-
-function TestComponent2() {
-  return <div className="m-4">test component 2</div>;
 }
