@@ -1,4 +1,6 @@
 "use client";
+import { Item } from "@/components/item";
+import { TestComponent1, TestComponent2 } from "@/components/testComponent";
 import {
   SelectedItemContextProvider,
   useSelectedItemContext,
@@ -6,33 +8,38 @@ import {
 } from "@/context/SelectedItemContext";
 import { items } from "@/data/item";
 import { TItem } from "@/types/Item";
-import { ChangeEventHandler, memo, useState } from "react";
+import { ChangeEventHandler, memo, useCallback } from "react";
 
 type TContextTesterItemProps = {
   item: TItem;
 };
 
-function ContextTesterItem({ item }: TContextTesterItemProps) {
+const ContextTesterItem = memo(function ContextTesterItem({
+  item,
+}: TContextTesterItemProps) {
   const selectedItem = useSelectedItemContext();
   const { selectItem, unselectItem } = useSelectedItemDispatchContext();
 
-  const handleCheck: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.target.checked) {
-      selectItem(item);
-    } else {
-      unselectItem();
-    }
-  };
-  const isChecked =
-    selectedItem != null ? selectedItem.name === item.name : false;
+  const handleCheck: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      if (e.target.checked) {
+        selectItem(item);
+      } else {
+        unselectItem();
+      }
+    },
+    [item, selectItem, unselectItem]
+  );
+
+  const isChecked = selectedItem?.name === item.name;
+
   return (
     <div>
-      <input type="checkbox" checked={isChecked} onChange={handleCheck} />
-      <span>{item.name}</span>
+      <Item item={item} isChecked={isChecked} handleCheck={handleCheck} />
       <TestComponent2 />
     </div>
   );
-}
+});
 
 export function ContextTester() {
   return (
@@ -46,11 +53,3 @@ export function ContextTester() {
     </SelectedItemContextProvider>
   );
 }
-
-function TestComponent1() {
-  return <div className="m-4">test component 1</div>;
-}
-
-const TestComponent2 = memo(function TestComponent2() {
-  return <div className="m-4">test component 2</div>;
-});
