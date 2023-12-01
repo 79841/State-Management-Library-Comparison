@@ -1,6 +1,7 @@
 "use client";
 import { Item } from "@/components/item";
 import { TestComponent1, TestComponent2 } from "@/components/testComponent";
+import { RenderingDisplayedWrapper } from "@/components/testComponent/RenderingDisplayedWrapper";
 import { items } from "@/data/item";
 import { selectSelectedItem, selectedItemSliceActions } from "@/lib/redux";
 import { Providers } from "@/lib/redux/providers";
@@ -31,22 +32,22 @@ const ReduxTesterItem = memo(function ReduxTesterItem({
   const isChecked = selectedItem?.name === item.name;
 
   return (
-    <div>
+    <RenderingDisplayedWrapper>
       <Item item={item} isChecked={isChecked} handleCheck={handleCheck} />
       <TestComponent2 />
-    </div>
+    </RenderingDisplayedWrapper>
   );
 });
 
 export function ReduxTester() {
   return (
     <Providers>
-      <div className="p-4">
+      <RenderingDisplayedWrapper>
         <TestComponent1 />
         {items.map((item) => (
           <ReduxTesterItem key={item.name} item={item} />
         ))}
-      </div>
+      </RenderingDisplayedWrapper>
     </Providers>
   );
 }

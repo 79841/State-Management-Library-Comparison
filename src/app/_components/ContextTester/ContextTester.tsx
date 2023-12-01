@@ -1,6 +1,7 @@
 "use client";
 import { Item } from "@/components/item";
 import { TestComponent1, TestComponent2 } from "@/components/testComponent";
+import { RenderingDisplayedWrapper } from "@/components/testComponent/RenderingDisplayedWrapper";
 import {
   SelectedItemContextProvider,
   useSelectedItemContext,
@@ -34,22 +35,22 @@ const ContextTesterItem = memo(function ContextTesterItem({
   const isChecked = selectedItem?.name === item.name;
 
   return (
-    <div>
+    <RenderingDisplayedWrapper>
       <Item item={item} isChecked={isChecked} handleCheck={handleCheck} />
       <TestComponent2 />
-    </div>
+    </RenderingDisplayedWrapper>
   );
 });
 
 export function ContextTester() {
   return (
     <SelectedItemContextProvider>
-      <div className="p-4">
+      <RenderingDisplayedWrapper>
         <TestComponent1 />
         {items.map((item: TItem) => (
           <ContextTesterItem key={item.name} item={item} />
         ))}
-      </div>
+      </RenderingDisplayedWrapper>
     </SelectedItemContextProvider>
   );
 }

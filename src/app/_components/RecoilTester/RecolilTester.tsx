@@ -6,6 +6,7 @@ import { selectedItemAtom } from "@/lib/recoil/selectedItem";
 import { ChangeEventHandler, memo, useCallback } from "react";
 import { TestComponent1, TestComponent2 } from "@/components/testComponent";
 import { Item } from "@/components/item";
+import { RenderingDisplayedWrapper } from "@/components/testComponent/RenderingDisplayedWrapper";
 
 type TRecoillTesterItemProps = {
   item: TItem;
@@ -31,22 +32,22 @@ const RecoilTesterItem = memo(function RecoilTesterItem({
   const isChecked = selectedItem?.name == item.name;
 
   return (
-    <div>
+    <RenderingDisplayedWrapper>
       <Item item={item} isChecked={isChecked} handleCheck={handleCheck} />
       <TestComponent2 />
-    </div>
+    </RenderingDisplayedWrapper>
   );
 });
 
 export function RecolilTester() {
   return (
     <RecoilRoot>
-      <div className="p-4">
+      <RenderingDisplayedWrapper>
         <TestComponent1 />
         {items.map((item) => (
           <RecoilTesterItem key={item.name} item={item} />
         ))}
-      </div>
+      </RenderingDisplayedWrapper>
     </RecoilRoot>
   );
 }
