@@ -1,3 +1,7 @@
+import { RenderingDisplayedWrapper } from "./RenderingDisplayedWrapper";
+
 export function TestComponent1() {
-  return <div className="m-4">test component 1</div>;
+  return (
+    <RenderingDisplayedWrapper>test component 1</RenderingDisplayedWrapper>
+  );
 }
