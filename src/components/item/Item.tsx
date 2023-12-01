@@ -1,5 +1,6 @@
 import { TItem } from "@/types/Item";
 import { ChangeEventHandler, ComponentPropsWithoutRef, memo } from "react";
+import { RenderingDisplayedWrapper } from "../testComponent/RenderingDisplayedWrapper";
 
 type TItemProps = {
   item: TItem;
@@ -12,9 +13,9 @@ export const Item = memo(function Item({
   handleCheck,
 }: TItemProps) {
   return (
-    <div>
+    <RenderingDisplayedWrapper>
       <input type="checkbox" checked={isChecked} onChange={handleCheck} />
       <span>{item.name}</span>
-    </div>
+    </RenderingDisplayedWrapper>
   );
 });
